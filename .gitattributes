@@ -2,4 +2,4 @@
 * text eol=lf
 
 images/* binary
-*.executable binary
+*.exe binary
