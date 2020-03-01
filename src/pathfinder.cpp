@@ -5,7 +5,7 @@
 #include <cstring>
 #include <fstream>
 #include <iostream>
-#include <sstream>
+#include <sstream>  //用于使用istringstream
 #include <string>
 #include <vector>
 #include "ActorGraph.hpp"
@@ -52,15 +52,24 @@ int main(int argc, char* argv[]) {
         if (!haveHeader) {
             outfile << "(actor)--[movie#@year]-->(actor)--..." << endl;
             haveHeader = true;
-            continue;
+            continue;  // jump out this time's while loop, 接着第二次的while
+                       // loop,从第二次的
+            // while loop,
+            // 就会skip这个if条件，因为haveHeader已经被设置成true了！
         }
 
         // read the pair from each line
-        istringstream ss(s);
+        istringstream ss(s);  //这个s是inFile里面每一行的string
         vector<string> actorPair;
+        // this while reads two substrings from each row's whole string:ss
         while (ss) {
             string str;
+            // istream& getline (char* s, streamsize n, char delim );
+            // use '\t' to be a delimiter, 遇到'\t',就停止继续read
+            // which我们一次读一个actor's name,所以一次call
+            // getline(),就可以存一个actor'name into str
             if (!getline(ss, str, '\t')) break;
+            //一次while loop, push一个actor's name into this actorPair vector!
             actorPair.push_back(str);
         }
 
