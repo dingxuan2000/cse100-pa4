@@ -38,6 +38,17 @@ int main(int argc, char* argv[]) {
     cout << "Reading " << graphFileName << " ..." << endl;
     if (!graph->buildGraphFromFile(graphFileName)) return 1;
     cout << "Done." << endl;
+    cout << graph->ActorMap["James McAvoy"]->actorName << endl;
+    int vector_size =
+        graph->MovieMap["X-Men: First Class2011"]->actor_vector.size();
+    for (int i = 0; i < vector_size; i++) {
+        cout << graph->MovieMap["X-Men: First Class2011"]
+                    ->actor_vector[i]
+                    ->actorName
+             << endl;
+    }
+    // MovieNode* movie = graph->ActorMap["Kevin Bacon"]->movies_vector[0];
+    // cout << movie->MovieName << endl;
 
     // write the shorest path of each given pair to the output file
     ifstream infile(pairs);

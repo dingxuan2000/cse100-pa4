@@ -8,25 +8,25 @@
 #ifndef MOVIENODE_HPP
 #define MOVIENODE_HPP
 #include <iostream>
+#include <unordered_map>
 #include <vector>
 #include "ActorNode.hpp"
 using namespace std;
-
+class ActorNode;
 class MovieNode {
   private:
   public:
-    string movie_name;  // the name of the movie
-    int movie_year;     // the year of the movie
-    // a vector to store the other actors pointers
-    // that also participant in this movie
-    vector<ActorNode*> actors;
+    vector<ActorNode*> actor_vector;
+    // unordered_map<string, ActorNode*> MovietoActor;
+    string MovieName;
+    int year;
+    bool visited;
+    ActorNode* prev;
+    int dist;
 
-    // create a pair to store movie name and movie year
-    // pair<string, int> moviePair;
-    // moviePair.first = movie_name;
-    // moviePair.second = movie_year;
-    /* Constructor that initialize a MovieNode */
-    MovieNode(string name, int year) : movie_name(name), movie_year(year) {}
+    MovieNode(string title, int year) : MovieName(title), year(year) {}
+
+    void addActor(ActorNode* actor1) { actor_vector.push_back(actor1); }
 };
 
 #endif

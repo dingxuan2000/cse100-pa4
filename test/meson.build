@@ -1,6 +1,6 @@
 warning('Create your own test suite in the test directory')
 
-test_actorgraph_exe = executable('test_ActorGraph.exe', 
+test_actorgraph_exe = executable('test_ActorGraph.executable', 
     sources: ['test_ActorGraph.cpp'], 
     dependencies : [actorgraph_dep, gtest_dep])
 test('my actorgraph test', test_actorgraph_exe)

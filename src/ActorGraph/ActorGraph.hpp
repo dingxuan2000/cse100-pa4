@@ -8,22 +8,29 @@
 #include <unordered_map>
 #include <vector>
 #include "ActorNode.hpp"
-#include "MovieNode.hpp"
+// #include "MovieNode.hpp"
 
 using namespace std;
 
 /**
  * TODO: add class header
  */
+
 class ActorGraph {
   protected:
     // TODO: add data structures used in actor graph
     // ActorNode* actor;
     // MovieNode* movie;
-    unordered_map<string, ActorNode*> ActorMap;
-    unordered_map<pair<string, int>, MovieNode*> MovieMap;
+    // unordered_map<string, ActorNode*> ActorMap;
+    // unordered_map<pair<string, int>, MovieNode*> MovieMap;
+
+    // unordered_map<string, ActorNode*> ActorMap;  // store Actors in a map
+    // unordered_map<string, MovieNode*> MovieMap;
 
   public:
+    unordered_map<string, ActorNode*> ActorMap;  // store Actors in a map
+    unordered_map<string, MovieNode*> MovieMap;
+    void build(string actor, string title, int year, string title_year);
     /* TODO */
     ActorGraph();
 
