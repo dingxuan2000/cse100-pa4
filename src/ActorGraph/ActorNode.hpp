@@ -19,7 +19,7 @@ class ActorNode {
     vector<MovieNode*> movies_vector;
     string actorName;
     bool visited = false;
-    MovieNode* prev = nullptr;
+    MovieNode* prev;
     int dist;
 
     ActorNode(string name) : actorName(name) {}

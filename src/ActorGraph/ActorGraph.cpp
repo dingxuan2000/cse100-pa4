@@ -16,8 +16,8 @@ using namespace std;
  * node(edge)需要initialize, 但是不确定这样initialize map，对吗？
  */
 ActorGraph::ActorGraph() : ActorMap(0), MovieMap(0) {}
-void ActorGraph::build(string actor, string title, int year,
-                       string title_year) {
+void ActorGraph::build(const string& actor, const string& title,
+                       const int& year, const string& title_year) {
     if (this->ActorMap.count(actor) == 0) {
         this->ActorMap[actor] = new ActorNode(
             actor);  // create a new actor node if no actor node is found
@@ -39,6 +39,11 @@ void ActorGraph::build(string actor, string title, int year,
     } else {                                          // if actor is found.
         if (this->MovieMap.count(title_year) == 0) {  // if movie is not found
             this->MovieMap[title_year] = new MovieNode(title, year);
+            this->MovieMap[title_year]->addActor(
+                this->ActorMap[actor]);  // movie adds actor
+            this->ActorMap[actor]->addMovie(
+                this->MovieMap[title_year]);  // actor adds movie.
+        } else {
             this->MovieMap[title_year]->addActor(
                 this->ActorMap[actor]);  // movie adds actor
             this->ActorMap[actor]->addMovie(
@@ -129,6 +134,7 @@ void ActorGraph::BFS(const string& fromActor, const string& toActor,
     queue<ActorNode*> toExplore;
     ActorNode* start = ActorMap[fromActor];
     start->dist = 0;
+    // start->prev = nullptr;
     toExplore.push(start);  // push the start actor node into the queue
     // if the actor2 has not been visited, then continue traver the graph
     while ((ActorMap[toActor]->visited == false) && (!toExplore.empty())) {
@@ -155,13 +161,10 @@ void ActorGraph::BFS(const string& fromActor, const string& toActor,
                 // vector
                 vector<ActorNode*>::iterator it = p->actor_vector.begin();
                 for (; it != p->actor_vector.end(); ++it) {
-                    //     // if the actor node in this movie vector has not
-                    //     been
-                    //     // visited, then visit it, reset its dist, its
-                    //     visited, its
-                    //     // prev(should be current movie node's prev:the last
-                    //     actor
-                    //     // node), and last push into queue
+                    // if the actor node in this movie vector has not been
+                    // visited, then visit it, reset its dist, its visited,
+                    // its prev(should be current movie node's prev:the
+                    // lastactor node), and last push into queue
                     ActorNode* ptr = *it;
                     if (ptr->visited == false) {
                         ptr->visited = true;
@@ -176,16 +179,31 @@ void ActorGraph::BFS(const string& fromActor, const string& toActor,
         }
     }
     ActorNode* end = ActorMap[toActor];
-    while (end != 0) {
+    // if (end->visited == false) {
+    //     return;
+    // }
+    // cout << end->prev->prev->prev->prev->prev->MovieName << endl;
+    start->prev = nullptr;
+    while (end->prev != nullptr) {
+        // cout << end->actorName << endl;
         shortestPath = "(" + end->actorName + ")" + shortestPath;
-        if (end->prev != 0) {
+        // cout << end->prev->MovieYear << endl;
+        if (end != nullptr) {
+            // cout << end->prev->MovieName << endl;
             shortestPath = end->prev->MovieYear + shortestPath;
             end = end->prev->prev;
+            // cout << shortestPath << endl;
+            // cout << end->prev->MovieYear << endl;
+            // cout << end->prev->MovieName << endl;
+            // cout << end->prev->prev->actorName << endl;
+            // cout << edge->MovieName << endl;
+            // break;
+
         } else {
-            // shortestPath = "(" + end->actorName + ")" + shortestPath;
             break;
         }
     }
+    // shortestPath = "(" + start->actorName + ")" + shortestPath;
 }
 /* TODO */
 void ActorGraph::predictLink(const string& queryActor,

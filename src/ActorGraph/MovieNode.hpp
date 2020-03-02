@@ -20,11 +20,12 @@ class MovieNode {
     // unordered_map<string, ActorNode*> MovietoActor;
     string MovieName;
     int year;
-    bool visited = false;
-    ActorNode* prev = nullptr;
+    bool visited;
+    ActorNode* prev;
     int dist;
     string MovieYear = "--[" + MovieName + "#@" + to_string(year) + "]-->";
-    MovieNode(string title, int year) : MovieName(title), year(year) {}
+    MovieNode(string title, int year)
+        : MovieName(title), year(year), visited(false) {}
 
     void addActor(ActorNode* actor1) { actor_vector.push_back(actor1); }
 };
