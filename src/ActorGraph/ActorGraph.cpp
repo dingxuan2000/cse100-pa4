@@ -116,8 +116,77 @@ bool ActorGraph::buildGraphFromFile(const char* filename) {
 
 /* TODO */
 void ActorGraph::BFS(const string& fromActor, const string& toActor,
-                     string& shortestPath) {}
+                     string& shortestPath) {
+    if (fromActor == toActor) {
+        shortestPath = "";
+        return;
+    }
+    if (this->ActorMap.count(fromActor) == 0 ||
+        this->ActorMap.count(toActor) == 0) {
+        shortestPath = "";
+        return;
+    }
+    queue<ActorNode*> toExplore;
+    ActorNode* start = ActorMap[fromActor];
+    start->dist = 0;
+    toExplore.push(start);  // push the start actor node into the queue
+    // if the actor2 has not been visited, then continue traver the graph
+    while ((ActorMap[toActor]->visited == false) && (!toExplore.empty())) {
+        ActorNode* next = toExplore.front();  // front() just returns a
+                                              // reference to the first
+        // element of the vector
+        toExplore.pop();  // first. pop a node in queue
 
+        // begin() returns an iterator that can be used to iterate throught the
+        // vector
+        // 1.traverse the movie nodes in the current actor node's movie
+        // vector
+        vector<MovieNode*>::iterator iter = next->movies_vector.begin();
+        for (; iter != next->movies_vector.end(); ++iter) {
+            // if the current movie node has not been visited, then visit it
+            MovieNode* p = *iter;
+            if (p->visited == false) {
+                // cout << p->MovieName << endl;
+                p->visited = true;
+                p->dist = next->dist;
+                p->prev = next;
+                // then push all the actor node's neighbors into
+                // queue(toExplore) by traversing current movie node's actor
+                // vector
+                vector<ActorNode*>::iterator it = p->actor_vector.begin();
+                for (; it != p->actor_vector.end(); ++it) {
+                    //     // if the actor node in this movie vector has not
+                    //     been
+                    //     // visited, then visit it, reset its dist, its
+                    //     visited, its
+                    //     // prev(should be current movie node's prev:the last
+                    //     actor
+                    //     // node), and last push into queue
+                    ActorNode* ptr = *it;
+                    if (ptr->visited == false) {
+                        ptr->visited = true;
+                        ptr->dist = p->dist + 1;
+                        ptr->prev = p;
+                        toExplore.push(ptr);
+                    }
+                    //     // if the actor node has already visited, do nothing
+                }
+            }
+            // if the movie node has already visited, do nothing
+        }
+    }
+    ActorNode* end = ActorMap[toActor];
+    while (end != 0) {
+        shortestPath = "(" + end->actorName + ")" + shortestPath;
+        if (end->prev != 0) {
+            shortestPath = end->prev->MovieYear + shortestPath;
+            end = end->prev->prev;
+        } else {
+            // shortestPath = "(" + end->actorName + ")" + shortestPath;
+            break;
+        }
+    }
+}
 /* TODO */
 void ActorGraph::predictLink(const string& queryActor,
                              vector<string>& predictionNames,

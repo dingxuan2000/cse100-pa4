@@ -38,17 +38,19 @@ int main(int argc, char* argv[]) {
     cout << "Reading " << graphFileName << " ..." << endl;
     if (!graph->buildGraphFromFile(graphFileName)) return 1;
     cout << "Done." << endl;
-    cout << graph->ActorMap["James McAvoy"]->actorName << endl;
-    int vector_size =
-        graph->MovieMap["X-Men: First Class2011"]->actor_vector.size();
-    for (int i = 0; i < vector_size; i++) {
-        cout << graph->MovieMap["X-Men: First Class2011"]
-                    ->actor_vector[i]
-                    ->actorName
-             << endl;
-    }
-    // MovieNode* movie = graph->ActorMap["Kevin Bacon"]->movies_vector[0];
-    // cout << movie->MovieName << endl;
+
+    /*---Testing buildGraph functions!-----*/
+    // cout << graph->ActorMap["James McAvoy"]->actorName << endl;
+    // int vector_size =
+    //     graph->MovieMap["The Current War2017"]->actor_vector.size();
+    // cout << graph->MovieMap["The Current War2017"]->year << endl;
+    // for (int i = 0; i < vector_size; i++) {
+    //     cout << graph->MovieMap["The Current War2017"]
+    //                 ->actor_vector[i]
+    //                 ->actorName
+    //          << endl;
+    // }
+    /*--------------------------*/
 
     // write the shorest path of each given pair to the output file
     ifstream infile(pairs);
@@ -95,6 +97,7 @@ int main(int argc, char* argv[]) {
         // output the shorest path for each line
         string shortestPath = "";
         graph->BFS(actor1, actor2, shortestPath);
+
         if (shortestPath.length() > 0) {
             outfile << shortestPath;
         }
