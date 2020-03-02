@@ -98,7 +98,6 @@ int main(int argc, char* argv[]) {
         // output the shorest path for each line
         string shortestPath = "";
         graph->BFS(actor1, actor2, shortestPath);
-        cout << "111111" << endl;
         if (shortestPath.length() > 0) {
             outfile << shortestPath;
         }
