@@ -30,6 +30,7 @@ class ActorGraph {
   public:
     unordered_map<string, ActorNode*> ActorMap;  // store Actors in a map
     unordered_map<string, MovieNode*> MovieMap;
+    void Bfsreset();
     void build(const string& actor, const string& title, const int& year,
                const string& title_year);
     /* TODO */

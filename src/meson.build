@@ -1,7 +1,7 @@
 subdir('ActorGraph')
 subdir('Map')
 
-pathfinder_exe = executable('pathfinder.cpp.executable', 
+pathfinder_exe = executable('pathfinder.exe', 
     sources: ['pathfinder.cpp'],
     dependencies: [actorgraph_dep],
     install : true)

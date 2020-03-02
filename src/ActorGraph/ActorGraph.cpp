@@ -119,6 +119,21 @@ bool ActorGraph::buildGraphFromFile(const char* filename) {
     return true;
 }
 
+void ActorGraph::Bfsreset() {
+    unordered_map<string, ActorNode*>::iterator iter1 = ActorMap.begin();
+    unordered_map<string, MovieNode*>::iterator iter2 = MovieMap.begin();
+
+    for (; iter1 != ActorMap.end(); ++iter1) {
+        ActorNode* ptr = iter1->second;
+        ptr->visited = false;
+        ptr->prev = nullptr;
+    }
+    for (; iter2 != MovieMap.end(); ++iter2) {
+        MovieNode* ptr = iter2->second;
+        ptr->visited = false;
+        ptr->prev = nullptr;
+    }
+}
 /* TODO */
 void ActorGraph::BFS(const string& fromActor, const string& toActor,
                      string& shortestPath) {
@@ -179,12 +194,14 @@ void ActorGraph::BFS(const string& fromActor, const string& toActor,
         }
     }
     ActorNode* end = ActorMap[toActor];
-    // if (end->visited == false) {
-    //     return;
-    // }
+    if (end->visited == false) {
+        Bfsreset();
+        return;
+    }
+
     // cout << end->prev->prev->prev->prev->prev->MovieName << endl;
-    start->prev = nullptr;
-    while (end->prev != nullptr) {
+    // start->prev = nullptr;
+    while (end != start) {
         // cout << end->actorName << endl;
         shortestPath = "(" + end->actorName + ")" + shortestPath;
         // cout << end->prev->MovieYear << endl;
@@ -203,7 +220,8 @@ void ActorGraph::BFS(const string& fromActor, const string& toActor,
             break;
         }
     }
-    // shortestPath = "(" + start->actorName + ")" + shortestPath;
+    Bfsreset();
+    shortestPath = "(" + start->actorName + ")" + shortestPath;
 }
 /* TODO */
 void ActorGraph::predictLink(const string& queryActor,
@@ -211,4 +229,18 @@ void ActorGraph::predictLink(const string& queryActor,
                              unsigned int numPrediction) {}
 
 /* TODO */
-ActorGraph::~ActorGraph() {}
+ActorGraph::~ActorGraph() {
+    unordered_map<string, ActorNode*>::iterator iter1 = ActorMap.begin();
+    unordered_map<string, MovieNode*>::iterator iter2 = MovieMap.begin();
+
+    for (; iter1 != ActorMap.end(); ++iter1) {
+        ActorNode* ptr = iter1->second;
+        delete ptr;
+    }
+    for (; iter2 != MovieMap.end(); ++iter2) {
+        MovieNode* ptr = iter2->second;
+        delete ptr;
+    }
+    // this->ActorMap.clear();
+    // this->MovieMap.clear();
+}
