@@ -26,7 +26,9 @@ TEST(SimpleGraph, TEST_BUILD) {
     // ASSERT_EQ(graph->MovieMap["00722002"]->actor_vector.size(), 1);
 
     // cerr << graph->ActorMap["Alice"]->actorName << endl;
-    // string shortPath = "";
-    // graph->BFS("John", "Berry", shortPath);
-    // ASSERT_EQ(shortPath, "(John)--[0071#@2002]-->(Berry)");
+    string shortPath = "";
+    graph->BFS("John", "Berry", shortPath);
+    // cout << shortPath << endl;
+    // string shortPath1 = "(John)--[0071#@2002]-->(Berry)";
+    EXPECT_EQ("(John)--[0071#@2002]-->(Berry)", shortPath);
 }
