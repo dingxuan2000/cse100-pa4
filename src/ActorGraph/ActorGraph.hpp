@@ -33,33 +33,35 @@ class ActorGraph {
     void Bfsreset();
     void build(const string& actor, const string& title, const int& year,
                const string& title_year);
-    /* TODO */
+    /* TODO
+     *Initialize tow hashmaps to be empty initially.
+     */
     ActorGraph();
 
     /* TODO
-     * 这个会在pathfinder.cpp里面被call, so the pathfinder.cpp can output the
-     * shortest unweighted path between two given actors.
-     * This function 已经完成了一部分了, is to load data(line by line) from the
-     * input file. We should complete this function to build the entire graph
-     * correctly.
+     * Build the actor graph from dataset file.
+     * Each line of the dataset file must be formatted as:
+     * ActorName <tab> MovieName <tab> Year
+     * Two actors are connected by an undirected edge if they have worked in a
+     * movie before. Here, call helper function build() to build the graph
      */
     bool buildGraphFromFile(const char* filename);
 
     /* TODO
-     * 这个会在pathfinder.cpp里面被call
+     *
      */
     void BFS(const string& fromActor, const string& toActor,
              string& shortestPath);
 
     /* TODO
-     * 这个会在linkpresictor.cpp里面被call, so the linkpredictor.cpp can output
+     * will be called in linkpresictor.cpp, so the linkpredictor.cpp can output
      * the predicted new link between two actors in the future.
      */
     void predictLink(const string& queryActor, vector<string>& predictionNames,
                      unsigned int numPrediction);
 
     /* TODO
-     *
+     * Delete all actor nodes and movie nodes in two hashmaps
      */
     ~ActorGraph();
 };

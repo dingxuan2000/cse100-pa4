@@ -52,47 +52,32 @@ TEST(SimpleGraph, TEST_READFILE) {
     bool readHeader = false;
     while (infile) {
         string s;
-        //这里没懂，getline returns iostream
         if (!getline(infile, s)) break;
 
-        // skip the header of the file
         if (!readHeader) {
             readHeader = true;
-            continue;  // will skip the whole loopdealing with the first line
-                       // information
+            continue;
         }
-
-        // s: get the whole string in a row, until reaches newline
-        // read each line of the dataset to get the movie actor relation
-        istringstream ss(s);  // istringstream: helps to deliminate the whole
-                              // string to substrings, so here, ss is still the
-                              // same as s, which is the whole string in a row.
+        istringstream ss(s);
         vector<string> record;
         while (ss) {
             string str;
             if (!getline(ss, str, '\t')) break;
-            // in this while loop, push three strings: actor name, movie name
-            // movie year into record vector
             record.push_back(str);
         }
 
-        // if format is wrong, skip current line
         if (record.size() != 3) {
             continue;
         }
 
-        // extract the information
         string actor(record[0]);
         string title(record[1]);
         string title_year(record[1] + record[2]);
         int year = stoi(record[2]);
 
         graph->build(actor, title, year, title_year);
-
-        // TODO: we have an actor/movie relationship to build the graph
     }
 
-    // if failed to read the file, clear the graph and return
     if (!infile.eof()) {
         cerr << "Failed to read "
              << "buildGraph.txt" << endl;

@@ -11,11 +11,14 @@
 using namespace std;
 
 /* TODO
- * 在pathfinder.cpp里面，create a ActorGraph pointer,
- * 现在需要给这个graph里面的什么initialize 我觉得是actor node(vertice), movie
- * node(edge)需要initialize, 但是不确定这样initialize map，对吗？
+ * Initialize tow hashmaps to be empty initially.
  */
 ActorGraph::ActorGraph() : ActorMap(0), MovieMap(0) {}
+/*
+ * Helper function: According to string actor, movieName, movieYear to
+ * build the graph, using two hashmap: ActorMap, MovieMap to store the
+ * actor nodes and movie nodes, then connect them by using vector in each node.
+ */
 void ActorGraph::build(const string& actor, const string& title,
                        const int& year, const string& title_year) {
     if (this->ActorMap.count(actor) == 0) {
@@ -56,12 +59,10 @@ void ActorGraph::build(const string& actor, const string& title,
  * ActorName <tab> MovieName <tab> Year
  * Two actors are connected by an undirected edge if they have worked in a movie
  * before.
- * 这里的filename就比如是data/imdb_2019.tsv
+ * Here, call helper function build() to build the graph
  */
 bool ActorGraph::buildGraphFromFile(const char* filename) {
-    //和open
-    // function用法一样，这样更简单，直接创建对象，创建对象的过程直接调用open
-    //方法
+    // same as open function, easier:can create object directly
     ifstream infile(filename);
     bool readHeader = false;
 
@@ -69,7 +70,7 @@ bool ActorGraph::buildGraphFromFile(const char* filename) {
     // then tederminate the loop
     while (infile) {
         string s;
-        //这里没懂，getline returns iostream
+        // Confused here:getline returns iostream
         if (!getline(infile, s)) break;
 
         // skip the header of the file
@@ -198,8 +199,6 @@ void ActorGraph::BFS(const string& fromActor, const string& toActor,
         Bfsreset();
         return;
     }
-
-    // cout << end->prev->prev->prev->prev->prev->MovieName << endl;
     // start->prev = nullptr;
     while (end != start) {
         // cout << end->actorName << endl;
@@ -209,12 +208,6 @@ void ActorGraph::BFS(const string& fromActor, const string& toActor,
             // cout << end->prev->MovieName << endl;
             shortestPath = end->prev->MovieYear + shortestPath;
             end = end->prev->prev;
-            // cout << shortestPath << endl;
-            // cout << end->prev->MovieYear << endl;
-            // cout << end->prev->MovieName << endl;
-            // cout << end->prev->prev->actorName << endl;
-            // cout << edge->MovieName << endl;
-            // break;
 
         } else {
             break;
@@ -228,7 +221,9 @@ void ActorGraph::predictLink(const string& queryActor,
                              vector<string>& predictionNames,
                              unsigned int numPrediction) {}
 
-/* TODO */
+/* TODO
+ * Delete all actor nodes and movie nodes in two hashmaps
+ */
 ActorGraph::~ActorGraph() {
     unordered_map<string, ActorNode*>::iterator iter1 = ActorMap.begin();
     unordered_map<string, MovieNode*>::iterator iter2 = MovieMap.begin();
@@ -241,6 +236,4 @@ ActorGraph::~ActorGraph() {
         MovieNode* ptr = iter2->second;
         delete ptr;
     }
-    // this->ActorMap.clear();
-    // this->MovieMap.clear();
 }
