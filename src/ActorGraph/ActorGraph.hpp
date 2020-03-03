@@ -1,5 +1,15 @@
 /**
  * TODO: add file header
+ * Author:Xuan Ding, xding@ucsd.edu
+ *        Qilong Li, qil009@ucsd.edu
+ * This file includes class ActorGraph with have the functionality to build
+ * actor class and movie class together to build a undirected and weighted
+ * graph. this class contains unordered_maps as data structure as collections of
+ * all moviesNodes and ActorNodes object pointers. this class provides function
+ * to build graph and can build graph from external files. it also includes
+ * Breath first search to output paths from one actor to another, as well as the
+ * ability to predict links of one actor and predict their connections with
+ * other actors.
  */
 
 #ifndef ACTORGRAPH_HPP
@@ -48,7 +58,11 @@ class ActorGraph {
     bool buildGraphFromFile(const char* filename);
 
     /* TODO
-     *
+     *This function performs breath first search to the graph. This function
+     takes three strings as parameter, string fromActor is the actor name of the
+     graph starting from, string toActor is is the destination of the graph. The
+     paths from starting node to destination node will be written into the
+     string shortestPath.
      */
     void BFS(const string& fromActor, const string& toActor,
              string& shortestPath);

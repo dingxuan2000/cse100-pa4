@@ -1,5 +1,10 @@
 /**
  * TODO: add file header
+ * Author:Xuan Ding, xding@ucsd.edu
+ *        Qilong Li, qil009@ucsd.edu
+ * this file provides  implementation of constructor and destructor of
+ * ActorGraph class. as well as the implementation of functions in
+ * ActorGraph.hpp.
  */
 
 #include "ActorGraph.hpp"
@@ -119,7 +124,10 @@ bool ActorGraph::buildGraphFromFile(const char* filename) {
 
     return true;
 }
-
+/*
+ * resetBFS This function resets the varible prev, and  visited to default for
+ * each node of the graph
+ */
 void ActorGraph::Bfsreset() {
     unordered_map<string, ActorNode*>::iterator iter1 = ActorMap.begin();
     unordered_map<string, MovieNode*>::iterator iter2 = MovieMap.begin();
@@ -135,7 +143,13 @@ void ActorGraph::Bfsreset() {
         ptr->prev = nullptr;
     }
 }
-/* TODO */
+/* TODO
+ * This function performs breath first search to the graph. This function takes
+ three strings as parameter, string fromActor is the actor name of the graph
+ starting from, string toActor is is the destination of the graph. The paths
+ from starting node to destination node will be written into the string
+ shortestPath.
+*/
 void ActorGraph::BFS(const string& fromActor, const string& toActor,
                      string& shortestPath) {
     if (fromActor == toActor) {
@@ -188,7 +202,7 @@ void ActorGraph::BFS(const string& fromActor, const string& toActor,
                         ptr->prev = p;
                         toExplore.push(ptr);
                     }
-                    //     // if the actor node has already visited, do nothing
+                    // if the actor node has already visited, do nothing
                 }
             }
             // if the movie node has already visited, do nothing

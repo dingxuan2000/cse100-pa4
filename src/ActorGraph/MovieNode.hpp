@@ -3,6 +3,8 @@
  *
  * Author:Xuan Ding, xding@ucsd.edu
  *        Qilong Li, qil009@ucsd.edu
+ * this file implements the class MoveNode, which provdes movie nodes which acts
+ * as edges between two actors.
  *
  */
 #ifndef MOVIENODE_HPP

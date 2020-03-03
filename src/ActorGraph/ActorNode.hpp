@@ -1,3 +1,12 @@
+/**
+ * TODO: file header
+ *
+ * Author:Xuan Ding, xding@ucsd.edu
+ *        Qilong Li, qil009@ucsd.edu
+ * this file implements the class ActorNode, which provides actor nodes that
+ * acts as vertices of the actorGraph class
+ *
+ */
 #ifndef ACTORNODE_HPP
 #define ACTORNODE_HPP
 
