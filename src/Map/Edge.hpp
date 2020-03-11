@@ -21,6 +21,10 @@ class Edge {
     /* The constructor that creates a new edge */
     Edge(Vertex* source, Vertex* target, float weight)
         : source(source), target(target), weight(weight) {}
+
+    bool operator<(Edge w2) { return (this->weight < w2.weight); }
+
+    bool operator>(Edge w2) { return (this->weight > w2.weight); }
 };
 
 #endif  // EDGE_HPP
