@@ -183,39 +183,30 @@ void Map::Dijkstra(const string& from, const string& to,
 }
 Vertex* Map::find(Vertex* vertex) {
     Vertex* ptr = vertex;
-    cout << ptr->name << endl;
     vector<Vertex*> vec;
     int count = 0;
     if (ptr->parent == nullptr) {
         if (ptr->count_child == 0) {
             ptr->count_child = ptr->count_child + 1;
         }
-
-        cout << ptr->count_child << endl;
         return ptr;
     }
     while (ptr->parent != nullptr) {
-        // cout << ptr->parent->name << endl;
-
         vec.push_back(ptr);
         count++;
         ptr = ptr->parent;
-        // cout << ptr->name << endl;
     }
     ptr->count_child = count + 1;  // used to compare two sets' size in union()
-    // cout << ptr->count_child << endl;
+
     // traverse vec
     for (int i = 0; i < vec.size(); i++) {
         Vertex* vertex = vec.back();
         vertex->parent = ptr;
         vec.pop_back();
-        // cout << vec.size() << endl;
     }
     return ptr;
 }
 void Map::Union(Vertex* v1, Vertex* v2) {
-    // cout << v1->count_child << endl;
-    // cout << v2->count_child << endl;
     if (v1->count_child > v2->count_child) {
         v2->parent = v1;
         v1->parent = nullptr;
@@ -239,20 +230,16 @@ void Map::findMST(vector<Edge*>& MST) {
     for (; iter != undirectedEdges.end(); iter++) {
         Edge* edgeptr = *iter;
         pq.push(make_pair(edgeptr, edgeptr->weight));
-        // cout << "1111111" << endl;
     }
 
     // 2.每pop一个edge出来，首先看这个edge的两个vertex,
     // 通过find()查看这两个vertex是否 在同一个set里面，if they are not in the
     // same set, then union them.
     while (!pq.empty()) {
-        // pair<Edge*, float> pair = pq.top();
         Edge* edge = pq.top().first;
-        // cout << edge->weight << endl;
+
         Vertex* start = edge->source;  // get two sides of one edge
         Vertex* end = edge->target;
-        cout << start->name << endl;
-        cout << end->name << endl;
         // check each city, by find() to see if they are in the same set,
         // find() returns Vertex pointer
         // if they are in the same set(if find() returns two same vertex
@@ -264,16 +251,12 @@ void Map::findMST(vector<Edge*>& MST) {
             // merge these two sets
             Union(v1, v2);
             MST.push_back(edge);
-        } else {
-            // cout << "loop" << endl;
         }
-        cout << "11111" << endl;
+
         // Otherwise, if they are in the different set, then union them
-        // cout << pq.size() << endl;
+
         pq.pop();
-        // cout << pq.size() << endl;
     }
-    cout << "22222" << endl;
 }
 
 bool Map::BfsHelper(Vertex* start, Vertex* End) {
@@ -297,14 +280,16 @@ bool Map::BfsHelper(Vertex* start, Vertex* End) {
 
     }                          // while
     RestoreEdge(start, temp);  // add the removed edge back into vector.
+    // If we can't reach the end vertex, then it has cricual edge between start
+    // vertex and end vertex
     if (End->done == false) {  // bfs couldnt reach done.
-
         return true;
-
-    } else {
+    }
+    // if we can reach to end vertex, that means it's not a bridge edge
+    // between these two vertices.
+    else {
         return false;
     }
-
 }  // bfs
 
 Edge* Map::RemoveEdge(Vertex* start, Vertex* end) {
