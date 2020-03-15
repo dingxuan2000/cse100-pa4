@@ -1,7 +1,16 @@
 
 #include "Map.hpp"
+/**
+ * TODO: add file header
+ * Author:Xuan Ding, xding@ucsd.edu
+ *        Qilong Li, qil009@ucsd.edu
+ * this file implements three algorithm:Dijkstra, Kruskal, and crucialRoads.
+ * First, to find the shortest path between two cities.
+ * Second, to find the minuimum spanning tree.
+ * Third, to find all bridge roads.
+ */
 
-/* TODO */
+/* TODO: Initialize an empty map */
 Map::Map() {}
 
 /* Build the map graph from vertex and edge files */
@@ -87,7 +96,8 @@ bool Map::addEdge(const string& name1, const string& name2) {
     undirectedEdges.push_back(new Edge(v1, v2, weight));
     return true;
 }
-// Initialize PQ: set
+// Initialize PQ: set weight to be INFINITY, set prev to be nullptr, set done to
+// be false.
 void Map::Dreset() {
     // traverse all the vertexes in the vector(vertices)
     vector<Vertex*>::iterator iter1 = vertices.begin();
@@ -100,7 +110,12 @@ void Map::Dreset() {
         ptr->prev = 0;
     }
 }
-/* TODO */
+/* TODO: Given two cities' names, we can find the corresponding vertices in the
+ * map, and use priority queue to store each vertice's neighbors and their
+ * weights. By using pq, we can sort the weights, ans find the shortest weight
+ * between two vertices.
+ *
+ */
 void Map::Dijkstra(const string& from, const string& to,
                    vector<Vertex*>& shortestPath) {
     // cout<<"started"<<endl;
@@ -181,6 +196,11 @@ void Map::Dijkstra(const string& from, const string& to,
         reverse.pop();
     }
 }
+/**
+ * Used for findMST(), given a vertice, check if we can find it in the up-tree.
+ * If we can find it in the up-tree, then means it is in the same set;
+ * otherwise, call union()
+ */
 Vertex* Map::find(Vertex* vertex) {
     Vertex* ptr = vertex;
     vector<Vertex*> vec;
@@ -206,6 +226,10 @@ Vertex* Map::find(Vertex* vertex) {
     }
     return ptr;
 }
+/**
+ * Used for findMST(), given two vertices(sentinals), we can use their children
+ * in their own up-trees.
+ */
 void Map::Union(Vertex* v1, Vertex* v2) {
     if (v1->count_child > v2->count_child) {
         v2->parent = v1;
@@ -221,7 +245,10 @@ void Map::Union(Vertex* v1, Vertex* v2) {
         v2->count_child = v1->count_child + v2->count_child;
     }
 }
-/* TODO */
+/* TODO:Traverse the vector that full of all the edge nodes in the graph,
+ * For each edge node, check if its source vertex and target vertex are in the
+ * same set, if not, union them; otherwise, ignore this edge.
+ */
 void Map::findMST(vector<Edge*>& MST) {
     // 1.put all the edges into priority queue, and sort it from smallest to
     // largest
@@ -258,7 +285,8 @@ void Map::findMST(vector<Edge*>& MST) {
         pq.pop();
     }
 }
-
+// to check if there's other paths that can go from start vertice to end
+// vertice.
 bool Map::BfsHelper(Vertex* start, Vertex* End) {
     Dreset();  // reset graph
     queue<Vertex*> ToExplore;
@@ -291,7 +319,7 @@ bool Map::BfsHelper(Vertex* start, Vertex* End) {
         return false;
     }
 }  // bfs
-
+// to cut this edge in the graph
 Edge* Map::RemoveEdge(Vertex* start, Vertex* end) {
     for (int i = 0; i < start->outEdges.size(); i++) {
         Edge* edges = start->outEdges[i];
@@ -303,11 +331,16 @@ Edge* Map::RemoveEdge(Vertex* start, Vertex* end) {
         }
     }
 }
-
+// To reconnect this edge.
 void Map::RestoreEdge(Vertex* start, Edge* edge) {
     start->outEdges.push_back(edge);
 }
-/* TODO */
+/* TODO
+ * Traverse the Edge vector, for each edge node, first, find its source and
+ * target vertices. Then call RemoveEdge() to cut this edge in the graph, then
+ * call BfsHelper() to check if there's other paths that can go from start
+ * vertice to end vertice. Afterall, call RestoreEdge() to reconnect this edge.
+ */
 void Map::crucialRoads(vector<Edge*>& roads) {
     vector<Edge*>::iterator iter = undirectedEdges.begin();
     for (; iter != undirectedEdges.end(); ++iter) {

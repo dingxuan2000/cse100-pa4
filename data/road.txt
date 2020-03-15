@@ -1,0 +1,10 @@
+GalbraithHall OslerParking
+GalbraithHall YorkHall
+OslerParking Revelle
+YorkHall Revelle
+Revelle Muir
+Muir Sixth
+Sixth ERC
+Sixth CSE
+CSE Warren
+ERC Warren

@@ -8,7 +8,9 @@ using namespace std;
 
 class Edge;
 
-/* This class defines a vertex in map graph. Each vertex has a name and x, y
+/** Author:Xuan Ding, xding@ucsd.edu
+ *        Qilong Li, qil009@ucsd.edu
+ *  This class defines a vertex in map graph. Each vertex has a name and x, y
  * coordinates in the map */
 class Vertex {
   public:

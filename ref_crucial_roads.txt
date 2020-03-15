@@ -1,0 +1,6 @@
+Dallas - Houston
+KansasCity - Chicago
+KansasCity - Dallas
+LasVegas - KansasCity
+NewOrleans - Miami
+Vancouver - Seattle

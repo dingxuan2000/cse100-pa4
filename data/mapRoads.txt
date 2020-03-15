@@ -1,0 +1,15 @@
+Vancouver Seattle
+SanFrancisco Seattle
+LasVegas Seattle
+SanFrancisco LosAngeles
+SanFrancisco LasVegas
+LasVegas LosAngeles
+KansasCity LasVegas
+KansasCity Dallas
+KansasCity Chicago
+Dallas Houston
+Chicago Atlanta
+NewOrleans Atlanta
+NewOrleans Miami
+NewOrleans NewYork
+NewYork Chicago

@@ -1,3 +1,13 @@
+/**
+ * TODO: add file header
+ * Author:Xuan Ding, xding@ucsd.edu
+ *        Qilong Li, qil009@ucsd.edu
+ * this file is a Edge class, provides all the member variables that Edge node
+ * needs, which provdes edges between Vertex. That it's easy for us to implement
+ * Map.cpp by using this Edge class.
+ *
+ */
+
 #ifndef EDGE_HPP
 #define EDGE_HPP
 
